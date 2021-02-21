@@ -1,7 +1,0 @@
-export const enviroments = {
-    PREFIX: '!',
-    ZAC_BOT_TOKEN: 'ODExOTM3NzE5MDM4NTA5MDY2.YC5d7Q.AgNKpDfku8PykZ8aByA7dD6PLpM',
-    RIOT_API_TOKEN: 'RGAPI-47d2c8f0-bed8-4668-899e-502932cfce30',
-    YOUTUBE_API_TOKEN: 'AIzaSyB6lQR9R4KwA5HnoVhT965Tkj2GJhhTKkI',
-    owners: []
-}
