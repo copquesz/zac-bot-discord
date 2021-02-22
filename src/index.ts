@@ -1,6 +1,7 @@
 import BotClient from './client/BotClient';
 import dotenv from 'dotenv';
 import express from 'express';
+import http from 'http';
 
 dotenv.config();
 
@@ -15,4 +16,28 @@ const app = express();
 app.listen(port, host, () =>{
   console.log(`App listen on port: ${port}`);
   client.start();
+  startKeepAlive();
 })
+
+function startKeepAlive(){
+  setInterval(() => {
+    var options = {
+      host: host,
+      port: process.env.PORT,
+      path: '/'
+    };
+    http.get(options, res => {
+      res.on('data', chuck => {
+        try{
+          console.log(`Heroku response: ${chuck}`)
+        } 
+        catch(err){
+          console.log(err.message)
+        }
+      })
+    }).on('error', err => {
+      console.log(`Erro: ${err.message}`)
+    })
+  }, 15 * 60 * 1000)
+
+}
