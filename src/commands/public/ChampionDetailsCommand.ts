@@ -1,4 +1,3 @@
-import { enviroments } from './../../../enviroment';
 import { Command } from 'discord-akairo';
 import { Message, MessageEmbed } from 'discord.js';
 import * as champions from '../../riot/data/champion.json';
@@ -92,7 +91,7 @@ export default class ChampionDetailsCommand extends Command {
     }    
 
     public async searchVideos(championName: string, key: string, results: number): Promise<any>{
-        var opts: youtubeSearch.YouTubeSearchOptions = { maxResults: results, key: enviroments.YOUTUBE_API_TOKEN };
+        var opts: youtubeSearch.YouTubeSearchOptions = { maxResults: results, key: process.env.YOUTUBE_API_TOKEN };
         return await youtubeSearch.default(`${key} ${championName}`, opts);
     }
 

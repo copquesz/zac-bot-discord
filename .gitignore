@@ -50,8 +50,7 @@ typings/
 *.tgz
 
 # dotenv environment variables file
-environment
-environment.ts
+.env
 
 # typescript compiled code
 dist/

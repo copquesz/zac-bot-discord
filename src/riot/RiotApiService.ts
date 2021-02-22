@@ -1,4 +1,3 @@
-import { enviroments } from '../../enviroment';
 import { LolApi } from 'twisted'
 import { Regions } from 'twisted/dist/constants';
 
@@ -23,7 +22,7 @@ export class RiotApiService{
         rateLimitRetry: true,
         rateLimitRetryAttempts: 1,
         concurrency: undefined,    
-        key: enviroments.RIOT_API_TOKEN,  
+        key: process.env.RIOT_API_TOKEN,  
         debug: {
             logTime: false,
             logUrls: false,

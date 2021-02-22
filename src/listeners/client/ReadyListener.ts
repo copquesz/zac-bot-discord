@@ -1,6 +1,4 @@
-import { enviroments } from './../../../enviroment';
 import { Listener } from 'discord-akairo';
-import { LolApi, Constants } from 'twisted';
 
 export default class ReadyListener extends Listener {
     public constructor(){

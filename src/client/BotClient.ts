@@ -1,4 +1,3 @@
-import { enviroments } from '../../enviroment';
 import { join } from 'path';
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo';
 import { Message } from 'discord.js';
@@ -24,7 +23,7 @@ export default class BotClient extends AkairoClient{
 
     public commandHandler: CommandHandler = new CommandHandler(this, {
         directory: join(__dirname, '..', 'commands'),
-        prefix: enviroments.PREFIX,
+        prefix: process.env.PREFIX,
         allowMention: true,
         handleEdits: true,
         commandUtil: true,
@@ -42,7 +41,7 @@ export default class BotClient extends AkairoClient{
             },
             otherwise: ''
         },
-        ignorePermissions: enviroments.owners
+        ignorePermissions: process.env.owners
     });
 
     public constructor(config: BotConfig){
