@@ -52,5 +52,11 @@ typings/
 # dotenv environment variables file
 .env
 
+# type-orm config
+ormconfig.json
+
 # typescript compiled code
 dist/
+
+# Diagram Class
+diagram-class.mdj

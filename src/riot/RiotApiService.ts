@@ -16,9 +16,9 @@ interface RiotApiConfig{
 
 export class RiotApiService{
 
-    public api: LolApi;
+    private api: LolApi;
 
-    public config: RiotApiConfig = {
+    private config: RiotApiConfig = {
         rateLimitRetry: true,
         rateLimitRetryAttempts: 1,
         concurrency: undefined,    
@@ -34,7 +34,7 @@ export class RiotApiService{
         this.api = new LolApi(this.config);     
     }
 
-    public async summonerByNameExample (name: string, region: Regions) {
+    public async summonerByNicknameExample (name: string, region: Regions) {
         return await this.api.Summoner.getByName(name, region);
     }
 }

@@ -2,7 +2,6 @@ import { Command } from 'discord-akairo';
 import { Message, MessageEmbed } from 'discord.js';
 import * as champions from '../../riot/data/champion.json';
 import * as capitalize from 'capitalize';
-import { stripIndents } from 'common-tags';
 import * as youtubeSearch from "youtube-search";
 
 
@@ -36,7 +35,7 @@ export default class ChampionDetailsCommand extends Command {
             const champion = Object.assign(champions)['data'][championName];
 
             const krReplaysPromisse = await Object.assign(this.searchVideos(championName, 'KR Replays', 3)); 
-            const krReplaysValues = krReplaysPromisse.results.map((obj: any) => `[${obj.title}](${obj.link})`).join("\n")
+            const krReplaysValues = krReplaysPromisse.results.map((obj: youtubeSearch.YouTubeSearchResults) => `[${obj.title}](${obj.link})`).join("\n")
 
             const montagesReplaysPromisse =  await Object.assign(this.searchVideos(championName, 'Montage', 2));
             const montagesReplaysValues = montagesReplaysPromisse.results.map((obj: any) => `[${obj.title}](${obj.link})`).join("\n")

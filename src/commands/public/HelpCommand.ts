@@ -2,6 +2,7 @@ import { join } from 'path';
 import { Message, MessageEmbed } from 'discord.js';
 import { Command } from 'discord-akairo';
 import { stripIndents } from 'common-tags';
+import capitalize from 'capitalize';
 
 
 export default class HelpCommand extends Command {
@@ -29,7 +30,7 @@ export default class HelpCommand extends Command {
         if(command){  
             return message.channel.send(
                 new MessageEmbed()
-                    .setAuthor(`Help | ${command}`)
+                    .setAuthor(`Help - ${capitalize.words(command.id)}`)
                     .setColor('#3498db')
                     .setDescription(stripIndents`
                         **Description**
