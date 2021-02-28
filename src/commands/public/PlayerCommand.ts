@@ -1,3 +1,5 @@
+import { ChampionMasteryInterface } from './../../interfaces/ChampionMastery.interface';
+import { RiotApiService } from './../../riot/RiotApiService';
 
 //Entities
 import { Player } from "./../../entities/Player.entity";
@@ -9,15 +11,20 @@ import { Command, AkairoError } from "discord-akairo";
 import { GuildMember } from "discord.js";
 import { Message, MessageEmbed } from "discord.js";
 import * as capitalize from "capitalize";
+import { Regions } from 'twisted/dist/constants';
+import { ChampionMasteryDTO, ChampionsDataDragon, ChampionsDataDragonDetails } from 'twisted/dist/models-dto';
 
 export default class PlayerCommand extends Command {
+
   private playerService: PlayerService;
+  private riotService: RiotApiService;
+
   public constructor() {
     super("player", {
       aliases: ["player"],
       category: "Player Commands",
       description: {
-        content: "Displays player stats.",
+        content: "Exibe estatísticas do Player.",
         usage: "player @mention",
         examples: ["player"],
       },
@@ -31,7 +38,9 @@ export default class PlayerCommand extends Command {
         },
       ],
     });
+
     this.playerService = new PlayerService();
+    this.riotService = new RiotApiService();
   }
 
   public async exec(message: Message, { member }: { member: GuildMember }): Promise<Message> {
@@ -44,12 +53,35 @@ export default class PlayerCommand extends Command {
         where: [{ memberId: member.id }],
       });
       if (player != undefined) {
+        
+        var championsMasteryArray = new Array<ChampionMasteryInterface>();
+        await this.riotService.getChampionsMastery(player.summonerId, Regions.BRAZIL).then(
+            async result => {
+              let data = await result;
+              if(data.response.length > 3){
+                for(var i = 0; i < 3 ; i++ ){  
+                  const championMastery: ChampionMasteryDTO =  data.response[i];           
+                  await this.riotService.getChampion(championMastery.championId).then(
+                    async champion => {
+                      //console.log(champion);
+                      await championsMasteryArray.push({name: champion.name, level: championMastery.championLevel, lastPlayed: new Date(championMastery.lastPlayTime), points: championMastery.championPoints});
+                    }
+                  )
+                }
+              }
+            }
+        );
+
         const embed = new MessageEmbed()
-          .setAuthor(`Player - ${capitalize.words(member.nickname!)}`)
+          .setAuthor(`Player - ${capitalize.words(member.user.username)}`)
           .setColor("#3498db").setDescription(stripIndents`
-                ID: ${player.memberId}
-                Win Rate: ${player.winRate} 
-                KDA: ${player.kda}
+                Conta: ${player.nickname}
+                Win Rate in SCRIM: ${player.winRate} 
+                KDA in SCRIM: ${player.kda}
+
+                Melhores Campeões:
+                ${championsMasteryArray.map((data, index) => 
+                  `${index + 1}º - Campeão: ${data.name} | Pontos: ${data.points} | Maestria: ${data.level}`).join('\n ')}
             `);
             return message.channel.send(embed);
       } 

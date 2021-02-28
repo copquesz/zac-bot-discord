@@ -10,6 +10,9 @@ export class Player {
     memberId: string;
 
     @Column({default: null})
+    summonerId: string;
+
+    @Column({default: null})
     nickname: string;
 
     @Column({type: "decimal", precision: 2, default: 0})

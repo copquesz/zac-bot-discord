@@ -10,7 +10,7 @@ export class PlayerService {
         this.playerRepository = getRepository(Player);
     }
 
-    async create(player: Player): Promise<Player>{
+    async save(player: Player): Promise<Player>{
         return  await this.playerRepository.save(player);
     }
 

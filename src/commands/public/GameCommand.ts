@@ -66,7 +66,6 @@ export default class GameCommand extends Command {
 
                 // Push arrays
                 gameDetails.push(gameDetail);
-                
             }
 
             console.log(gameDetails);

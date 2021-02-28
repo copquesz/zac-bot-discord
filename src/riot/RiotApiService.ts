@@ -34,8 +34,16 @@ export class RiotApiService{
         this.api = new LolApi(this.config);     
     }
 
-    public async summonerByNicknameExample (name: string, region: Regions) {
+    public async getChampion(key: number){
+        return await this.api.DataDragon.getChampion(key);
+    }
+
+    public async getSummonerByNickName (name: string, region: Regions) {
         return await this.api.Summoner.getByName(name, region);
+    }
+
+    public async getChampionsMastery(encryptedSummonerId: string, region: Regions){
+        return await this.api.Champion.masteryBySummoner(encryptedSummonerId, region);
     }
 }
 
